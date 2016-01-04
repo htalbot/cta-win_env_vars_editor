@@ -1,0 +1,7 @@
+CTA is an environment variable editor for Windows.
+
+The files in this directory are generated each time CTA saves
+environment variables or when environment variables are exported.
+
+Each file contains environment variables before the save operation
+at the moment indicated by the file itself.

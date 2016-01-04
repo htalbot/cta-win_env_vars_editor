@@ -1,0 +1,3 @@
+mainicon ICON "../cta.ico"
+IDB_BITMAP_LOCK  BITMAP  DISCARDABLE  "../cadena_lock.bmp"
+IDB_BITMAP_GPL   BITMAP  DISCARDABLE  "../gplv3-88x31.bmp"

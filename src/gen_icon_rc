@@ -1,0 +1,1 @@
+windres --use-temp-file -icta.rc -octa_rc.o -I../wx/include/wx-2.9/wx

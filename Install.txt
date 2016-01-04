@@ -1,0 +1,126 @@
+Installation
+============
+
+These installation steps are necessary to work on C++ version of CTA.
+
+For the sake of installation instructions we use <cta_parent_directory>.
+It represents the parent directory of CTA. Where you see <cta_parent_directory>,
+replace it by the parent directory of CTA. For example, if cta_parent_directory
+is C:\projects\, <cta_parent_directory>\cta\src becomes C:\projects\cta\src.
+
+1- Download and install MinGW
+
+    - http://sourceforge.net/projects/mingw/files/Installer/mingw-get-inst/
+
+        (mingw-get-inst-20110802 when I downloaded it)
+
+    - Install it and select these components:
+
+            C++ Compiler
+            MSYS Basic system
+            MinGW Developer Toolkit
+
+    - Set PATH environment variable:
+
+        <installdir>\MinGW\bin
+        <installdir>\MinGW\msys\1.0\bin
+
+2- CTA has wxWidgets includes and libraries in its wx subdirectory but for
+   documentation sake, here is the recipe for building:
+
+        - Download wxWidgets 2.9.2 from http://sourceforge.net/projects/wxwindows/files/2.9.2/wxWidgets-2.9.2.7z/download
+
+            - 7z is a file that can be uncompressed with 7zip (www.7-zip.org)
+            - you can pick zip file instead
+
+        - Make directory C:\tmp\wx
+
+        - Uncompress wxWidgets-2.9.2.7z into C:\tmp\wx
+
+        - Make directory: C:\tmp\wx\build_release
+
+        - Set C:\tmp\wx\build_release the current directory
+          (cd C:\tmp\wx\build_release)
+
+        - Make directory C:\wx
+
+        - Execute
+
+            - ../configure --prefix=/c/wx --disable-shared
+              (long time to configure)
+              (--disable-shared: means static library)
+
+            - make
+              (longer time to make)
+
+            - make install
+
+        - Move C:\wx under <cta_parent_directory>\cta
+            (<cta_parent_directory>\cta\wx)
+
+3- Set prefix for wx-config
+
+    I thought calling wx-config --prefix=<cta_parent_directory>/cta/wx would
+    work but it seems not.
+
+    - Adjust the value of "prefix" in <cta_parent_directory>\cta\wx\bin\wx-config
+
+        ...
+        # Determine the base directories we require.
+        prefix=${input_option_prefix-${this_prefix:-<cta_parent_directory>/cta/wx}}
+        ...
+
+        Note: the directory is in msys format (/c/some_dir/sub_dir) instead
+              of dos format (C:\some_dir\sub_dir).
+
+              For example, if CTA is installed in C:\usr\cta, prefix should be:
+
+                prefix=${input_option_prefix-${this_prefix:-/c/usr/cta/wx}}
+
+4- Set PATH environment variable for wxWidgets
+
+    - Add value: <cta_parent_directory>/cta/wx/bin to PATH.
+      (You can use msys or dos format)
+
+        This makes wx-config available when make is launched.
+
+5- pcre
+
+    - download ftp://ftp.csx.cam.ac.uk/pub/software/programming/pcre/pcre-8.20.zip
+
+    - unzip
+
+    - Set the directory where pcre has been unzipped the current directory
+      (cd ...)
+
+    - msys:
+            ./configure --prefix=/c/pcre-8.20 --disable-shared --enable-utf8 --enable-unicode-properties
+            make
+            make install
+
+    - move content of /c/pcre-8.20 into <cta_parent_directory>/pcre/pcre-8.20
+
+    - in <cta_parent_directory>/pcre/pcre-8.20/bin/pcre-config, set prefix to <cta_parent_directory>/pcre/pcre-8.20
+            Note: <cta_parent_directory> is in msys format (/c/some_dir/sub_dir) instead
+              of dos format (C:\some_dir\sub_dir).
+
+    - set PATH env. var. to <cta_parent_directory>/pcre/pcre-8.20/bin
+            Note: <cta_parent_directory> is in msys format (/c/some_dir/sub_dir) instead
+              of dos format (C:\some_dir\sub_dir).
+
+6- To build:
+
+    - start msys.bat
+
+    - cd <cta_parent_directory>/cta/src
+      (for example, /c/usr/cta/src)
+
+    - make -f Makefile.cta
+
+    The executable is then in <cta_parent_directory>/cta/bin
+
+
+Note: to generate icon rc file, call gen_icon_rc
+
+
+

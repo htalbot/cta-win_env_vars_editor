@@ -1,0 +1,3 @@
+- Use wxRegEx instead of pcre.
+- Make use of dpo
+- Build with MSVC

@@ -1,0 +1,17 @@
+src/CTAFrame.o
+src/EnvVarVect.o
+src/ImportDlg.cpp.bak
+src/ImportDlg.h.bak
+src/ImportDlg.o
+src/ImportSelectionDlg.cpp.bak
+src/ImportSelectionDlg.h.bak
+src/ImportSelectionDlg.o
+src/InfoDlg.cpp.bak
+src/InfoDlg.h.bak
+src/InfoDlg.o
+src/NewVarDlg.cpp.bak
+src/NewVarDlg.h.bak
+src/NewVarDlg.o
+src/Utils.o
+src/main.o
+src/unicode_stuff.o

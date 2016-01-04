@@ -1,0 +1,279 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="fr" >
+	<head>
+      <title>CTA</title>
+      <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+		<link rel="stylesheet" media="screen" type="text/css" title="Format1" href="formats/format1.css" />
+   </head>
+   <body>
+		<div id="menu">
+			<ul>
+				<li><a href="#ABOUT_CTA">About CTA</li>
+				<li><a href="#LICENSE">License</a></li>
+				<li><a href="#WINDOWS_ENVIRONMENT_VARIABLE_PROBLEM">Windows environment variables problem</a></li>
+				<li><a href="#NAME">Name</a></li>
+				<li><a href="#LOGO">Logo</a></li>
+				<li><a href="#MOTIVATION">Motivation</a></li>
+				<li><a href="#DEVELOPMENT_ENVIRONMENT">Devlopment environment</a></li>
+				<li><a href="#NOTE">Note</a></li>
+				<li><a href="#DEMO">Demo</a></li>
+				<li><a href="#AUTHOR">Author</a></li>
+			</ul>
+		</div>
+
+		<div id="corps">
+
+			<div id="en_tete">
+				<p>CTA</p>
+				<p>A new Windows Environment Variables Editor</p>
+			</div>
+
+		   <h3 id="ABOUT_CTA">About CTA</h3>
+
+			   <p>CTA is another Windows environment variables editor.</p>
+
+				<p>The editor provided by Microsoft, sysdm.cpl is really minimalist. It is not
+				    user friendly and does not do its job properly
+				    (see Windows environment variable problem section).
+				</p>
+
+			    <p>I searched for alternatives and found these editors:</p>
+
+				<ul>
+					<li><a href="http://silvermace.com/weve/">http://silvermace.com/weve</a></li>
+				   <li><a href="http://sourceforge.net/projects/yawee/">http://sourceforge.net/projects/yawee</a></li>
+				   <li><a href="http://sourceforge.net/projects/winenvedit/">http://sourceforge.net/projects/winenvedit</a></li>
+				   <li><a href="http://www.rapidee.com/">http://www.rapidee.com</a></li>
+				</ul>
+
+	    		<p>None of them solves the problem.</p>
+
+			<h3 id="LICENSE">License</h3>
+
+                <p>==========================================================<br>
+                Copyright (C) 2012 Hubert Talbot. All rights reserved.<br>
+                ==========================================================</p>
+
+                <p>CTA is licensed under the GNU General Public License.</p>
+
+                <p>CTA is free software: you can redistribute it and/or modify
+                it under the terms of the GNU General Public License as published by
+                the Free Software Foundation, either version 3 of the License, or
+                (at your option) any later version.</p>
+
+                <p>CTA is distributed in the hope that it will be useful,
+                but WITHOUT ANY WARRANTY; without even the implied warranty of
+                MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+                GNU General Public License for more details.</p>
+
+                <p>You should have received a copy of the GNU General Public License
+                along with CTA.  If not, see
+                <a href="http://www.gnu.org/licenses/">http://www.gnu.org/licenses</a><br>
+                ==========================================================</p>
+
+			<h3 id="WINDOWS_ENVIRONMENT_VARIABLE_PROBLEM">Windows environment variable problem</h3>
+
+				<p>Once, I tried to build ACE/TAO/CIAO (http://www.cs.wustl.edu/~schmidt/) in Windows.</p>
+
+			   <p>I built ACE and TAO successfully but failed with CIAO.</p>
+
+			   <p>To build ACE/TAO/CIAO, we can define environment variables ACE_ROOT,
+			    TAO_ROOT and CIAO_ROOT.</p>
+
+			   <p>TAO_ROOT is defined as ACE_ROOT:&nbsp;&nbsp;&nbsp;&nbsp;%ACE_ROOT%\TAO<br><br>
+			    CIAO_ROOT is defined as TAO_ROOT: &nbsp;&nbsp;&nbsp;&nbsp;%TAO_ROOT%\CIAO.</p>
+
+			   <p>The problem is that Windows does not expand environment variables properly
+			    when level of nested environment variables exceeds two.</p>
+
+			   <p>In this case, Windows can resolve TAO_ROOT because it depends on ACE_ROOT
+			    only. Windows is unable to resolve CIAO_ROOT because it depends on TAO_ROOT
+			    that in turns depends on ACE_ROOT.</p>
+
+			   <p>Then, to be able to build CIAO, I had to define CIAO_ROOT as its actual
+			    path (or I could have defined it as %ACE_ROOT%\TAO\CIAO), that is
+			    not really convenient.</p>
+
+			   <p>CTA solves this problem.</p>
+
+			<h3 id="NAME">Name</h3>
+
+				<p>The name CTA comes from environment
+				variables that originally highlighted the problem for me.
+				</p>
+
+				<p>The letters CTA represent:</p>
+				<ul>
+					<li>C: CIAO</li>
+				  	<li>T: TAO</li>
+				  	<li>A: ACE</li>
+				</ul>
+
+			<h3 id="LOGO">Logo</h3>
+            <img src="cta.png" width="7%" height="7%"/>
+				<p>The logo is composed of three circles.</p>
+				<ul>
+					<li>The inner one corresponds to ACE</li>
+					<li>The one in the middle corresponds to TAO. TAO is defined as ACE.</li>
+					<li>The outer one corresponds to CIAO. CIAO is defined as TAO.</li>
+					<li>Letters have been dropped for esthetic reasons.</li>
+				</ul>
+
+			<h3 id="MOTIVATION">Motivation</h3>
+
+				<p>As I said earlier, I experienced some problems with environment variables
+				when building ACE/TAO/CIAO on Windows. It was annoying but not enough to
+				further investigate why.</p>
+
+				<p>Today, I am working on a development tool for linux and windows
+				operating systems that works heavily with environment variables.</p>
+
+				<p>Since I need environment variables in Windows too, I looked for an
+				explanation about this problem but didn't find anything.</p>
+
+				<p>I decided to understand and to fix the problem...</p>
+
+				<p>My work resulted in a Perl (Tk) application. It was my first version that
+				solved the problem but was not easy to use due to a poor graphical user
+				interface. The second version was a better one, still written in Perl but with wxWidgets.
+				Thereafter, because I did not want users of this application having to
+				install Perl and its additional packages, I decided to write a third
+				version in C++. The goal was to make a self contained application with no
+				external dependencies (dll), easy to install and ready to use.</p>
+
+			<h3 id="DEVELOPMENT_ENVIRONMENT">Development environment</h3>
+
+	    		<h4>Tools</h4>
+
+	        		<p>I decided to make this project open source. Thus, I decided to work with
+	        			open source tools only:</p>
+
+					<ul>
+	          		<li>MinGW | Minimalist GNU for Windows: http://www.mingw.org</li>
+
+	               	<p>Minimalist development environment for native Microsoft Windows
+	                		applications.</p>
+
+	                	<p>To build CTA as C++ application (with g++).</p>
+
+						<li>wxWidgets: http://www.wxwidgets.org</li>
+
+	                	<p>To make CTA a graphical user interface (GUI).</p>
+
+	      			<li>pcre: http://www.pcre.org</li>
+
+		               <p>To use regular expressions (since I used them in the first two
+		                versions with Perl, it was proper to use regular expressions in c++ too)</p>
+
+		            <li>MPC: http://www.ociweb.com</li>
+
+		               <p>Writing make projects for g++ can be tedious. One tool with which I
+		                feel comfortable is MPC. It is a great makefile generator.</p>
+
+		               <p>I have used version 3.9.27 included in ACE-6.0.4 but you can pick
+		                the lastest version from the download site.</p>
+
+		               <p>To generate the makefile (from src directory): mpc.pl -type make cta.mpc</p>
+
+							<p>Makefile.cta is then generated and the only thing to do to build
+	                		the application (from msys console) is: make -f Makefile.cta</p>
+
+	            	<li>wxGlade: http://wxglade.sourceforge.net/</li>
+
+	                	<p>To help designing graphical application (cta.wxg).</p>
+
+							<p>Version 0.6.5</p>
+
+	                    <p>Depedencies:</p>
+
+	                        <ul>
+	                        	<li>wxPython-2.8.12.1: http://wxpython.org</li>
+	                        	<li>Python-2.7.2: http://www.python.org</li>
+	                        </ul><br />
+
+	            	<li>Inkscape: used from Ubuntu distribution.</li>
+
+	                	<p>To sketch the logo (cta.svg).</p>
+
+	            	<li>Gimp: http://www.gimp.org</li>
+
+	                	<p>To convert the .svg file to .ico file (I had to run Gimp
+	                		in Windows to be able to convert it with no border).</p>
+
+		            <li>SciTE editor: http://www.scintilla.org/SciTE.html</li>
+
+	                	<p>I appreciate this editor.</p>
+					</ul>
+
+	    		<h4>Implementation</h4>
+
+					<p>I wanted CTA to be self contained, easy to use and easy to install.</p>
+
+	        		<p>To get there, wxWidgets and pcre have been built as static libraries and
+	        			standard C library has been linked statically.</p>
+
+	        		<p>The CTA project contains prebuilt of these libraries. Steps followed to build
+	        			them are presented in Install.txt file.</p>
+
+	    		<h4>Structure</h4>
+
+	        		<p>The content of cta directory:</p>
+
+					<p>bin:</p>
+
+						<ul>
+							<li>Executable:                         cta.exe</li>
+						</ul>
+
+	     			<p>doc:</p>
+
+						<ul>
+						<li>html documentation</li>
+	            	</ul>
+
+                    <p>pcre/pcre-8.20:</p>
+	        			<ul>
+	        				<li>prebuilt PCRE static library</li>
+	        			</ul>
+
+	     			<p>src:</p>
+
+						<ul>
+							<li>Source files: *.h, *.cpp</li>
+	            		<li>Resource files: *.rc</li>
+	            		<li>Script to generate object resource: gen_icon_rc</li>
+	            		<li>Object file about icon (not necessary to generate it again and again): cta_rc.o</li>
+	            		<li>Project definition: cta.mpc</li>
+	            		<li>Makefile: Makefile.cta</li>
+	            	</ul>
+
+	        		<p>wx:</p>
+
+	        			<ul>
+	        				<li>prebuilt wxWidgets static library</li>
+	        			</ul>
+
+			<h3 id="NOTE">Note</h3>
+
+				<p>If you need to define environment variables according to others, this
+					application is for you.</p>
+
+				<p>If you need to define environment variables according to others, avoid
+					using tools like the one provided by Windows (sysdm.cpl) because they don't
+					do the job correctly. You will have to fix the problem with CTA anyway.</p>
+
+			<h3 id="DEMO">Demo (right click on video to start it)</h3>
+                <p>This video is in Webm format (http://www.webmproject.org)</p>
+                <p>To see it from IE, look at http://www.webmproject.org/ie</p>
+				<video src="cta.webmvp8.webm"></video>
+
+			<h3 id="AUTHOR">Author</h3>
+
+				<ul>hubert.talbot64@gmail.com</ul>
+
+			<br /><br />
+
+		</div>
+
+	</body>
+</html>

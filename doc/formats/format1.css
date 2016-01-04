@@ -1,0 +1,66 @@
+#en_tete
+{
+	font-size: 25px;
+	color: blue;
+	text-align: center;
+   font-variant: small-caps;	
+}
+
+#menu
+{
+   background-color: yellow;
+   border: 1px solid green;
+   width: 250px;
+   height: 400px;
+   
+   position: fixed;
+   left: 5px;
+   top: 10px;
+}
+
+
+#corps
+{
+   text-align: justify;
+	margin-left: 270px;
+	color: black;
+}
+
+
+#liste_decalee
+{
+   text-align: justify;
+	margin-left: 260px;
+	color: black;
+}
+
+#descriptions
+{
+	text-indent: 20px;
+	color: red;
+}
+
+#description_fonction
+{
+	text-indent: 40px;
+	color: black;
+}
+
+#description_parametres ul
+{
+	margin-left: 40px;
+	text-indent: 0px;
+	color: black;
+}
+
+#description_valeur_retour
+{
+	text-indent: 60px;
+	color: black;
+}
+
+#couleur_enum
+{
+	color: purple;
+}
+
