@@ -1,3 +1,6 @@
 - Use wxRegEx instead of pcre.
 - Make use of dpo
 - Build with MSVC
+- Import: allow select directory
+- Fix bug when cta is run from two users (crash)
+- Reload: reload even when cta doesn't detect changes.
